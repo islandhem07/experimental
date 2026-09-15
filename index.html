@@ -1,0 +1,1344 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VLOOKUP & HLOOKUP Explained — Excel Lookup Guide</title>
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📊</text></svg>">
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+    <!-- ============ NAV ============ -->
+    <nav class="topnav">
+        <div class="nav-inner">
+            <a class="brand" href="#top"><span class="brand-x">X</span> Excel Lookup Guide</a>
+            <div class="nav-links">
+                <a href="#basics">Basics</a>
+                <a href="#vlookup">VLOOKUP</a>
+                <a href="#hlookup">HLOOKUP</a>
+                <a href="#compare">Compare</a>
+                <a href="#errors">Errors</a>
+                <a href="#demo">Try It</a>
+                <a href="#xlookup">XLOOKUP</a>
+            </div>
+        </div>
+    </nav>
+
+    <header class="hero" id="top">
+        <div class="hero-inner">
+            <span class="hero-kicker">Microsoft Excel · Step-by-step with annotated screenshots</span>
+            <h1>Master <span class="hl-word">VLOOKUP</span> & <span class="hl-word">HLOOKUP</span></h1>
+            <p class="hero-sub">Learn Excel's two most famous lookup functions with visual, annotated walkthroughs —
+                see exactly <em>where Excel searches</em>, <em>what it returns</em>, and <em>why</em>.</p>
+            <div class="hero-chips">
+                <code class="chip">=VLOOKUP(F2, A2:D8, 3, FALSE)</code>
+                <code class="chip">=HLOOKUP(B7, B1:F5, 4, FALSE)</code>
+            </div>
+            <div class="hero-cta">
+                <a class="btn btn-solid" href="#vlookup">Start with VLOOKUP →</a>
+                <a class="btn btn-ghost" href="#demo">Jump to interactive demo</a>
+            </div>
+        </div>
+    </header>
+
+    <main>
+
+        <!-- ============ BASICS ============ -->
+        <section id="basics" class="section">
+            <div class="container">
+                <span class="eyebrow">The Basics</span>
+                <h2>What is a lookup function?</h2>
+                <p class="lead">A lookup function answers one simple question: <strong>"Find this value in my data, and
+                        bring back
+                        something related to it."</strong> Think of a phone book — you look up a <em>name</em> (what you
+                    know) to find a
+                    <em>phone number</em> (what you want). Excel lookup functions do exactly that, thousands of times
+                    per second.
+                </p>
+
+                <div class="orient-grid">
+                    <div class="orient-card">
+                        <table class="mini-table">
+                            <tr>
+                                <td class="mt-h">Emp ID</td>
+                                <td class="mt-h">Name</td>
+                            </tr>
+                            <tr>
+                                <td>101</td>
+                                <td>Priya</td>
+                            </tr>
+                            <tr>
+                                <td>102</td>
+                                <td>Rahul</td>
+                            </tr>
+                            <tr>
+                                <td>103</td>
+                                <td>Sneha</td>
+                            </tr>
+                        </table>
+                        <div class="orient-arrow">↓</div>
+                        <h3>VLOOKUP — <em>V</em>ertical</h3>
+                        <p>Your table grows <strong>downward</strong> (records in rows). VLOOKUP searches <strong>down
+                                the first
+                                column</strong> and returns a value from a column to the right.</p>
+                    </div>
+                    <div class="orient-card">
+                        <table class="mini-table">
+                            <tr>
+                                <td class="mt-h">Jan</td>
+                                <td class="mt-h">Feb</td>
+                                <td class="mt-h">Mar</td>
+                            </tr>
+                            <tr>
+                                <td>120</td>
+                                <td>135</td>
+                                <td>148</td>
+                            </tr>
+                        </table>
+                        <div class="orient-arrow">→</div>
+                        <h3>HLOOKUP — <em>H</em>orizontal</h3>
+                        <p>Your table grows <strong>sideways</strong> (records in columns). HLOOKUP searches
+                            <strong>across the first
+                                row</strong> and returns a value from a row below.</p>
+                    </div>
+                    <div class="orient-card rule-card">
+                        <h3>🎯 Rule of thumb</h3>
+                        <p>Match the function to your table's shape:</p>
+                        <ul>
+                            <li><strong>V</strong> for <strong>V</strong>ertical data → VLOOKUP</li>
+                            <li><strong>H</strong> for <strong>H</strong>orizontal data → HLOOKUP</li>
+                        </ul>
+                        <p class="fine">90% of real-world spreadsheets are vertical — which is why VLOOKUP is the
+                            celebrity and HLOOKUP
+                            is its lesser-known sibling.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============ VLOOKUP ============ -->
+        <section id="vlookup" class="section alt">
+            <div class="container">
+                <span class="eyebrow">Function №1</span>
+                <h2>VLOOKUP — search down, return across</h2>
+                <p class="lead">VLOOKUP scans the <strong>first column</strong> of a table <strong>vertically</strong>
+                    to find your
+                    lookup value, then returns the value from another column in that same row.</p>
+
+                <!-- Syntax card -->
+                <div class="syntax-card">
+                    <h3>Syntax</h3>
+                    <code class="syntax-formula">
+        <span class="fn">=VLOOKUP</span>(<span class="c-blue">lookup_value</span>, <span class="c-amber">table_array</span>, <span class="c-green">col_index_num</span>, [<span class="c-purple">range_lookup</span>])
+      </code>
+                    <dl class="args">
+                        <div>
+                            <dt><i class="dot d1"></i>lookup_value</dt>
+                            <dd>The value you want to find — e.g. an Employee ID <code>105</code>.</dd>
+                        </div>
+                        <div>
+                            <dt><i class="dot d2"></i>table_array</dt>
+                            <dd>The range containing your data. <strong>The first column of this range must hold the
+                                    lookup values.</strong></dd>
+                        </div>
+                        <div>
+                            <dt><i class="dot d3"></i>col_index_num</dt>
+                            <dd>Which column of the <em>range</em> to return from. 1 = first column of the range, 2 =
+                                second, and so on.</dd>
+                        </div>
+                        <div>
+                            <dt><i class="dot d4"></i>range_lookup</dt>
+                            <dd><code>FALSE</code> = exact match (use this 95% of the time). <code>TRUE</code> =
+                                approximate match (for sorted bands like tax brackets).</dd>
+                        </div>
+                    </dl>
+                </div>
+
+                <h3 class="shot-title">📸 Example: look up an employee's department by ID</h3>
+                <p class="shot-desc">In cell <strong>G2</strong> we type <code>=VLOOKUP(F2, A2:D8, 3, FALSE)</code>.
+                    The formula bar shows the four color-coded arguments, and the highlights show exactly what each one
+                    points to.</p>
+
+                <!-- ANNOTATED SCREENSHOT 1 -->
+                <div class="shot">
+                    <div class="excel-window">
+                        <div class="excel-titlebar">
+                            <span class="excel-ico">X</span>
+                            <span class="excel-title">Employee-Data.xlsx — Excel</span>
+                            <span class="win-controls"><span>—</span><span>▢</span><span>✕</span></span>
+                        </div>
+                        <div class="excel-ribbon">
+                            <div class="ribbon-tabs">
+                                <span>File</span><span
+                                    class="active">Home</span><span>Insert</span><span>Draw</span><span>Formulas</span><span>Data</span><span>Review</span><span>View</span><span>Help</span>
+                            </div>
+                            <div class="ribbon-groups">
+                                <div class="rgroup"><span class="ric ric-big">📋</span><span
+                                        class="rlabel">Clipboard</span></div>
+                                <div class="rgroup"><span class="ric b">B</span><span class="ric i">I</span><span
+                                        class="ric u">U</span><span class="rlabel">Font</span></div>
+                                <div class="rgroup"><span class="ric">≡</span><span class="ric">%</span><span
+                                        class="ric">,</span><span class="rlabel">Number</span></div>
+                                <div class="rgroup"><span class="ric">Σ</span><span class="ric">fx</span><span
+                                        class="rlabel">Editing</span></div>
+                            </div>
+                        </div>
+                        <div class="excel-formula-bar">
+                            <div class="name-box">G2</div>
+                            <div class="fx-label">fx</div>
+                            <div class="formula-input">
+                                <span class="fn">=VLOOKUP</span>(<span class="c-blue">F2</span>, <span
+                                    class="c-amber">A2:D8</span>, <span class="c-green">3</span>, <span
+                                    class="c-purple">FALSE</span> <span class="badge b4">4</span>)
+                            </div>
+                        </div>
+                        <div class="excel-sheet">
+                            <div class="grid-wrap" style="width:726px;">
+                                <table class="excel-grid">
+                                    <colgroup>
+                                        <col style="width:44px">
+                                        <col style="width:112px">
+                                        <col style="width:112px">
+                                        <col style="width:112px">
+                                        <col style="width:112px">
+                                        <col style="width:18px">
+                                        <col style="width:108px">
+                                        <col style="width:108px">
+                                    </colgroup>
+                                    <thead>
+                                        <tr>
+                                            <th class="corner"></th>
+                                            <th>A</th>
+                                            <th>B</th>
+                                            <th>C</th>
+                                            <th>D</th>
+                                            <th>E</th>
+                                            <th>F</th>
+                                            <th>G</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <th class="rownum">1</th>
+                                            <td class="th-data">Emp ID</td>
+                                            <td class="th-data">Name</td>
+                                            <td class="th-data hl-green">Department <span class="badge b3">3</span></td>
+                                            <td class="th-data">Salary</td>
+                                            <td></td>
+                                            <td class="th-data">Employee ID</td>
+                                            <td class="th-data">Department</td>
+                                        </tr>
+                                        <tr>
+                                            <th class="rownum">2</th>
+                                            <td class="num hl-amber edge-t edge-l">101 <span class="badge b2">2</span>
+                                            </td>
+                                            <td class="hl-amber edge-t">Priya</td>
+                                            <td class="hl-amber edge-t">HR</td>
+                                            <td class="num hl-amber edge-t edge-r">₹45,000</td>
+                                            <td></td>
+                                            <td class="num hl-blue">105 <span class="badge b1">1</span></td>
+                                            <td class="cell-formula">Marketing</td>
+                                        </tr>
+                                        <tr>
+                                            <th class="rownum">3</th>
+                                            <td class="num hl-amber edge-l">102</td>
+                                            <td class="hl-amber">Rahul</td>
+                                            <td class="hl-amber">IT</td>
+                                            <td class="num hl-amber edge-r">₹62,000</td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <th class="rownum">4</th>
+                                            <td class="num hl-amber edge-l">103</td>
+                                            <td class="hl-amber">Sneha</td>
+                                            <td class="hl-amber">Finance</td>
+                                            <td class="num hl-amber edge-r">₹58,000</td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <th class="rownum">5</th>
+                                            <td class="num hl-amber edge-l">104</td>
+                                            <td class="hl-amber">Arjun</td>
+                                            <td class="hl-amber">IT</td>
+                                            <td class="num hl-amber edge-r">₹71,000</td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <th class="rownum">6</th>
+                                            <td class="num hl-amber edge-l ring-blue">105</td>
+                                            <td class="hl-amber">Meera</td>
+                                            <td class="hl-amber ring-green">Marketing</td>
+                                            <td class="num hl-amber edge-r">₹53,000</td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <th class="rownum">7</th>
+                                            <td class="num hl-amber edge-l">106</td>
+                                            <td class="hl-amber">Vikram</td>
+                                            <td class="hl-amber">Sales</td>
+                                            <td class="num hl-amber edge-r">₹49,000</td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <th class="rownum">8</th>
+                                            <td class="num hl-amber edge-b edge-l">107</td>
+                                            <td class="hl-amber edge-b">Divya</td>
+                                            <td class="hl-amber edge-b">Finance</td>
+                                            <td class="num hl-amber edge-b edge-r">₹66,000</td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <svg class="grid-overlay" width="726" height="252" viewBox="0 0 726 252"
+                                    aria-hidden="true">
+                                    <defs>
+                                        <marker id="arrB" markerWidth="8" markerHeight="8" refX="6" refY="4"
+                                            orient="auto">
+                                            <path d="M0,0 L8,4 L0,8 z" fill="#1a73e8" />
+                                        </marker>
+                                        <marker id="arrG" markerWidth="8" markerHeight="8" refX="6" refY="4"
+                                            orient="auto">
+                                            <path d="M0,0 L8,4 L0,8 z" fill="#188038" />
+                                        </marker>
+                                        <marker id="arrP" markerWidth="8" markerHeight="8" refX="6" refY="4"
+                                            orient="auto">
+                                            <path d="M0,0 L8,4 L0,8 z" fill="#8430ce" />
+                                        </marker>
+                                    </defs>
+                                    <path d="M100,32 L100,172" stroke="#1a73e8" stroke-width="2.5" fill="none"
+                                        marker-end="url(#arrB)" />
+                                    <path d="M110,182 L314,182" stroke="#188038" stroke-width="2.5" fill="none"
+                                        marker-end="url(#arrG)" />
+                                    <path d="M338,182 C470,182 610,150 664,86" stroke="#8430ce" stroke-width="2.5"
+                                        fill="none" stroke-dasharray="6 5" marker-end="url(#arrP)" />
+                                    <text x="110" y="115" fill="#1a73e8" font-size="11" font-weight="700"
+                                        stroke="#ffffff" stroke-width="3" paint-order="stroke">search down…</text>
+                                    <text x="150" y="172" fill="#188038" font-size="11" font-weight="700"
+                                        stroke="#ffffff" stroke-width="3" paint-order="stroke">3rd column</text>
+                                    <text x="465" y="152" fill="#8430ce" font-size="11" font-weight="700"
+                                        stroke="#ffffff" stroke-width="3" paint-order="stroke">returned!</text>
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="excel-statusbar">
+                            <span>Ready</span>
+                            <span class="sheet-tabs"><span class="active">Sheet1</span><span>+</span></span>
+                        </div>
+                    </div>
+
+                    <div class="legend">
+                        <span class="lg"><i class="dot d1"></i>lookup_value</span>
+                        <span class="lg"><i class="dot d2"></i>table_array</span>
+                        <span class="lg"><i class="dot d3"></i>col_index_num</span>
+                        <span class="lg"><i class="dot d4"></i>range_lookup</span>
+                    </div>
+
+                    <ol class="steps">
+                        <li><strong>Search down.</strong> Excel takes the lookup value <code class="c-blue">F2</code> (=
+                            105) and scans
+                            <em>down</em> the first column of <code class="c-amber">A2:D8</code> — that's column A, the
+                            Emp IDs.
+                        </li>
+                        <li><strong>Match found.</strong> It stops at row 6, where Emp ID <strong>105</strong> lives.
+                        </li>
+                        <li><strong>Step across.</strong> From that row, it moves to the <code
+                                class="c-green">3rd</code> column of the
+                            range — Department. (The range starts at A, so A=1, B=2, C=3.)</li>
+                        <li><strong>Return it.</strong> The last argument <code class="c-purple">FALSE</code> demands an
+                            <em>exact</em> match, so Excel confidently drops <strong>"Marketing"</strong> into G2. ✔
+                        </li>
+                    </ol>
+                </div>
+
+                <h3 class="shot-title">📸 Example 2: approximate match — grading scores</h3>
+                <p class="shot-desc">When <code class="c-purple">TRUE</code> is used, VLOOKUP finds the <strong>largest
+                        value that is
+                        still ≤ the lookup value</strong>. Perfect for score bands, tax slabs and commission tiers. A
+                    score of
+                    <strong>78</strong> falls into the 60–79 band → grade <strong>C</strong>. The lookup column
+                    <strong>must be sorted
+                        ascending</strong>.
+                </p>
+
+                <div class="shot">
+                    <div class="excel-window">
+                        <div class="excel-titlebar">
+                            <span class="excel-ico">X</span>
+                            <span class="excel-title">Grade-Sheet.xlsx — Excel</span>
+                            <span class="win-controls"><span>—</span><span>▢</span><span>✕</span></span>
+                        </div>
+                        <div class="excel-formula-bar">
+                            <div class="name-box">E2</div>
+                            <div class="fx-label">fx</div>
+                            <div class="formula-input">
+                                <span class="fn">=VLOOKUP</span>(<span class="c-blue">D2</span>, <span
+                                    class="c-amber">A2:B6</span>, <span class="c-green">2</span>, <span
+                                    class="c-purple">TRUE</span>)
+                            </div>
+                        </div>
+                        <div class="excel-sheet">
+                            <div class="grid-wrap" style="width:522px;">
+                                <table class="excel-grid">
+                                    <colgroup>
+                                        <col style="width:44px">
+                                        <col style="width:100px">
+                                        <col style="width:100px">
+                                        <col style="width:18px">
+                                        <col style="width:130px">
+                                        <col style="width:130px">
+                                    </colgroup>
+                                    <thead>
+                                        <tr>
+                                            <th class="corner"></th>
+                                            <th>A</th>
+                                            <th>B</th>
+                                            <th>C</th>
+                                            <th>D</th>
+                                            <th>E</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <th class="rownum">1</th>
+                                            <td class="th-data">Score</td>
+                                            <td class="th-data">Grade</td>
+                                            <td></td>
+                                            <td>Student score:</td>
+                                            <td>Grade:</td>
+                                        </tr>
+                                        <tr>
+                                            <th class="rownum">2</th>
+                                            <td class="num hl-amber edge-t edge-l">0</td>
+                                            <td class="hl-amber edge-t edge-r">F</td>
+                                            <td></td>
+                                            <td class="num hl-blue">78</td>
+                                            <td class="cell-formula">C</td>
+                                        </tr>
+                                        <tr>
+                                            <th class="rownum">3</th>
+                                            <td class="num hl-amber edge-l">40</td>
+                                            <td class="hl-amber edge-r">D</td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <th class="rownum">4</th>
+                                            <td class="num hl-green edge-l">60</td>
+                                            <td class="hl-green edge-r">C</td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <th class="rownum">5</th>
+                                            <td class="num hl-amber edge-l">80</td>
+                                            <td class="hl-amber edge-r">B</td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <th class="rownum">6</th>
+                                            <td class="num hl-amber edge-b edge-l">90</td>
+                                            <td class="hl-amber edge-b edge-r">A</td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="excel-statusbar">
+                            <span>Ready</span>
+                            <span class="sheet-tabs"><span class="active">Sheet1</span><span>+</span></span>
+                        </div>
+                    </div>
+                    <div class="caption">
+                        <p>Excel walks down column A looking for the <strong>biggest value ≤ 78</strong>. 90? Too big.
+                            80? Still too big.
+                            60? ✔ — so it returns the grade sitting next to 60: <strong>"C"</strong> (the green row).
+                            With
+                            <code>FALSE</code>, this same formula would return <code>#N/A</code> because 78 isn't in the
+                            list — that's the
+                            key difference between the two match modes.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============ HLOOKUP ============ -->
+        <section id="hlookup" class="section">
+            <div class="container">
+                <span class="eyebrow">Function №2</span>
+                <h2>HLOOKUP — search across, return down</h2>
+                <p class="lead">HLOOKUP is VLOOKUP's mirror image. It scans the <strong>first row</strong> of a table
+                    <strong>horizontally</strong>, then returns a value from a row <em>below</em> the match. You use it
+                    when your data is
+                    laid out sideways — like months running across the top of a report.
+                </p>
+
+                <div class="syntax-card">
+                    <h3>Syntax</h3>
+                    <code class="syntax-formula">
+        <span class="fn">=HLOOKUP</span>(<span class="c-blue">lookup_value</span>, <span class="c-amber">table_array</span>, <span class="c-green">row_index_num</span>, [<span class="c-purple">range_lookup</span>])
+      </code>
+                    <dl class="args">
+                        <div>
+                            <dt><i class="dot d1"></i>lookup_value</dt>
+                            <dd>The value to find in the <strong>first row</strong> — e.g. the month <code>"Mar"</code>.
+                            </dd>
+                        </div>
+                        <div>
+                            <dt><i class="dot d2"></i>table_array</dt>
+                            <dd>The data range. <strong>Its first row must hold the lookup values.</strong></dd>
+                        </div>
+                        <div>
+                            <dt><i class="dot d3"></i>row_index_num</dt>
+                            <dd>Which <em>row of the range</em> to return from. 1 = the header row itself, 2 = the row
+                                below it…</dd>
+                        </div>
+                        <div>
+                            <dt><i class="dot d4"></i>range_lookup</dt>
+                            <dd><code>FALSE</code> = exact match, <code>TRUE</code> = approximate. Same rules as
+                                VLOOKUP.</dd>
+                        </div>
+                    </dl>
+                </div>
+
+                <h3 class="shot-title">📸 Example: fetch the East region's March sales</h3>
+                <p class="shot-desc">Months run <em>across</em> the top, so VLOOKUP can't help — HLOOKUP is the right
+                    tool. In
+                    <strong>B8</strong> we type <code>=HLOOKUP(B7, B1:F5, 4, FALSE)</code>.
+                </p>
+
+                <!-- ANNOTATED SCREENSHOT 2 -->
+                <div class="shot">
+                    <div class="excel-window">
+                        <div class="excel-titlebar">
+                            <span class="excel-ico">X</span>
+                            <span class="excel-title">Monthly-Sales.xlsx — Excel</span>
+                            <span class="win-controls"><span>—</span><span>▢</span><span>✕</span></span>
+                        </div>
+                        <div class="excel-ribbon">
+                            <div class="ribbon-tabs">
+                                <span>File</span><span
+                                    class="active">Home</span><span>Insert</span><span>Draw</span><span>Formulas</span><span>Data</span><span>Review</span><span>View</span><span>Help</span>
+                            </div>
+                            <div class="ribbon-groups">
+                                <div class="rgroup"><span class="ric ric-big">📋</span><span
+                                        class="rlabel">Clipboard</span></div>
+                                <div class="rgroup"><span class="ric b">B</span><span class="ric i">I</span><span
+                                        class="ric u">U</span><span class="rlabel">Font</span></div>
+                                <div class="rgroup"><span class="ric">≡</span><span class="ric">%</span><span
+                                        class="ric">,</span><span class="rlabel">Number</span></div>
+                                <div class="rgroup"><span class="ric">Σ</span><span class="ric">fx</span><span
+                                        class="rlabel">Editing</span></div>
+                            </div>
+                        </div>
+                        <div class="excel-formula-bar">
+                            <div class="name-box">B8</div>
+                            <div class="fx-label">fx</div>
+                            <div class="formula-input">
+                                <span class="fn">=HLOOKUP</span>(<span class="c-blue">B7</span>, <span
+                                    class="c-amber">B1:F5</span>, <span class="c-green">4</span>, <span
+                                    class="c-purple">FALSE</span> <span class="badge b4">4</span>)
+                            </div>
+                        </div>
+                        <div class="excel-sheet">
+                            <div class="grid-wrap" style="width:696px;">
+                                <table class="excel-grid">
+                                    <colgroup>
+                                        <col style="width:44px">
+                                        <col style="width:112px">
+                                        <col style="width:108px">
+                                        <col style="width:108px">
+                                        <col style="width:108px">
+                                        <col style="width:108px">
+                                        <col style="width:108px">
+                                    </colgroup>
+                                    <thead>
+                                        <tr>
+                                            <th class="corner"></th>
+                                            <th>A</th>
+                                            <th>B</th>
+                                            <th>C</th>
+                                            <th>D</th>
+                                            <th>E</th>
+                                            <th>F</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <th class="rownum">1</th>
+                                            <td class="th-data">Region</td>
+                                            <td class="th-data hl-amber edge-t edge-l">Jan <span
+                                                    class="badge b2">2</span></td>
+                                            <td class="th-data hl-amber edge-t">Feb</td>
+                                            <td class="th-data hl-amber edge-t ring-blue">Mar</td>
+                                            <td class="th-data hl-amber edge-t">Apr</td>
+                                            <td class="th-data hl-amber edge-t edge-r">May</td>
+                                        </tr>
+                                        <tr>
+                                            <th class="rownum">2</th>
+                                            <td>North</td>
+                                            <td class="num hl-amber edge-l">12,500</td>
+                                            <td class="num hl-amber">14,200</td>
+                                            <td class="num hl-amber">15,800</td>
+                                            <td class="num hl-amber">13,400</td>
+                                            <td class="num hl-amber edge-r">16,900</td>
+                                        </tr>
+                                        <tr>
+                                            <th class="rownum">3</th>
+                                            <td>South</td>
+                                            <td class="num hl-amber edge-l">9,800</td>
+                                            <td class="num hl-amber">11,000</td>
+                                            <td class="num hl-amber">10,400</td>
+                                            <td class="num hl-amber">12,100</td>
+                                            <td class="num hl-amber edge-r">11,700</td>
+                                        </tr>
+                                        <tr>
+                                            <th class="rownum hl-row">4 <span class="badge b3">3</span></th>
+                                            <td>East</td>
+                                            <td class="num hl-green edge-l">14,300</td>
+                                            <td class="num hl-green">13,900</td>
+                                            <td class="num hl-green ring-green">16,200</td>
+                                            <td class="num hl-green">15,500</td>
+                                            <td class="num hl-green edge-r">17,300</td>
+                                        </tr>
+                                        <tr>
+                                            <th class="rownum">5</th>
+                                            <td>West</td>
+                                            <td class="num hl-amber edge-b edge-l">11,600</td>
+                                            <td class="num hl-amber edge-b">12,800</td>
+                                            <td class="num hl-amber edge-b">14,100</td>
+                                            <td class="num hl-amber edge-b">10,900</td>
+                                            <td class="num hl-amber edge-b edge-r">13,500</td>
+                                        </tr>
+                                        <tr>
+                                            <th class="rownum">6</th>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <th class="rownum">7</th>
+                                            <td><strong>Month:</strong></td>
+                                            <td class="hl-blue">Mar <span class="badge b1">1</span></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <th class="rownum">8</th>
+                                            <td><strong>East sales:</strong></td>
+                                            <td class="num cell-formula">16,200</td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <svg class="grid-overlay" width="696" height="252" viewBox="0 0 696 252"
+                                    aria-hidden="true">
+                                    <defs>
+                                        <marker id="arrB2" markerWidth="8" markerHeight="8" refX="6" refY="4"
+                                            orient="auto">
+                                            <path d="M0,0 L8,4 L0,8 z" fill="#1a73e8" />
+                                        </marker>
+                                        <marker id="arrG2" markerWidth="8" markerHeight="8" refX="6" refY="4"
+                                            orient="auto">
+                                            <path d="M0,0 L8,4 L0,8 z" fill="#188038" />
+                                        </marker>
+                                        <marker id="arrP2" markerWidth="8" markerHeight="8" refX="6" refY="4"
+                                            orient="auto">
+                                            <path d="M0,0 L8,4 L0,8 z" fill="#8430ce" />
+                                        </marker>
+                                    </defs>
+                                    <path d="M164,12 L412,12" stroke="#1a73e8" stroke-width="2.5" fill="none"
+                                        marker-end="url(#arrB2)" />
+                                    <path d="M426,24 L426,116" stroke="#188038" stroke-width="2.5" fill="none"
+                                        marker-end="url(#arrG2)" />
+                                    <path d="M418,132 C 380,190 300,222 236,234" stroke="#8430ce" stroke-width="2.5"
+                                        fill="none" stroke-dasharray="6 5" marker-end="url(#arrP2)" />
+                                    <text x="210" y="9" fill="#1a73e8" font-size="11" font-weight="700" stroke="#ffffff"
+                                        stroke-width="3" paint-order="stroke">search across…</text>
+                                    <text x="436" y="78" fill="#188038" font-size="11" font-weight="700"
+                                        stroke="#ffffff" stroke-width="3" paint-order="stroke">4th row</text>
+                                    <text x="300" y="205" fill="#8430ce" font-size="11" font-weight="700"
+                                        stroke="#ffffff" stroke-width="3" paint-order="stroke">returned!</text>
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="excel-statusbar">
+                            <span>Ready</span>
+                            <span class="sheet-tabs"><span class="active">Sheet1</span><span>+</span></span>
+                        </div>
+                    </div>
+
+                    <div class="legend">
+                        <span class="lg"><i class="dot d1"></i>lookup_value</span>
+                        <span class="lg"><i class="dot d2"></i>table_array</span>
+                        <span class="lg"><i class="dot d3"></i>row_index_num</span>
+                        <span class="lg"><i class="dot d4"></i>range_lookup</span>
+                    </div>
+
+                    <ol class="steps">
+                        <li><strong>Search across.</strong> Excel takes <code class="c-blue">B7</code> (= "Mar") and
+                            scans
+                            <em>rightward</em> along the first row of <code class="c-amber">B1:F5</code> — the month
+                            headers.
+                        </li>
+                        <li><strong>Match found.</strong> It stops at column D, where "Mar" sits.</li>
+                        <li><strong>Step down.</strong> From that column, it moves to the <code
+                                class="c-green">4th</code> row of the
+                            range — East. (Row 1 = headers, 2 = North, 3 = South, 4 = East.)</li>
+                        <li><strong>Return it.</strong> Exact match <code class="c-purple">FALSE</code> confirmed →
+                            <strong>16,200</strong> lands in B8. ✔
+                        </li>
+                    </ol>
+
+                    <div class="caption callout">
+                        <p>💡 <strong>Notice the one difference:</strong> VLOOKUP counts <em>columns</em> after
+                            searching
+                            <em>down</em>; HLOOKUP counts <em>rows</em> after searching <em>across</em>. Everything else
+                            — exact vs
+                            approximate match, the #N/A behaviour — works identically.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============ COMPARE ============ -->
+        <section id="compare" class="section alt">
+            <div class="container">
+                <span class="eyebrow">Side by side</span>
+                <h2>VLOOKUP vs HLOOKUP</h2>
+                <div class="table-scroll">
+                    <table class="compare-table">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th class="th-v">VLOOKUP</th>
+                                <th class="th-h">HLOOKUP</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="rowlab">Data orientation</td>
+                                <td>Vertical — values listed down a column</td>
+                                <td>Horizontal — values listed across a row</td>
+                            </tr>
+                            <tr>
+                                <td class="rowlab">Excel searches…</td>
+                                <td><strong>↓ down</strong> the first <em>column</em></td>
+                                <td><strong>→ across</strong> the first <em>row</em></td>
+                            </tr>
+                            <tr>
+                                <td class="rowlab">3rd argument counts…</td>
+                                <td>columns → <code>col_index_num</code></td>
+                                <td>rows → <code>row_index_num</code></td>
+                            </tr>
+                            <tr>
+                                <td class="rowlab">Returns a value from…</td>
+                                <td>a column to the <strong>right</strong> of the match</td>
+                                <td>a row <strong>below</strong> the match</td>
+                            </tr>
+                            <tr>
+                                <td class="rowlab">Typical use</td>
+                                <td>Employee lists, product catalogues, any record-per-row table</td>
+                                <td>Timetables, month-across reports, matrices</td>
+                            </tr>
+                            <tr>
+                                <td class="rowlab">Frequency in the wild</td>
+                                <td>★★★★★ everywhere</td>
+                                <td>★★☆☆☆ occasionally</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="callout">
+                    <p>🧭 <strong>Still unsure which to use?</strong> Look at where your <em>headers</em> are. Headers
+                        in the first
+                        <strong>row</strong> (top) → <strong>VLOOKUP</strong>. Headers in the first
+                        <strong>column</strong> (left) →
+                        <strong>HLOOKUP</strong>. The letter of the function matches the direction Excel travels to
+                        <em>find</em> your
+                        value: V travels vertically, H travels horizontally.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============ ERRORS ============ -->
+        <section id="errors" class="section">
+            <div class="container">
+                <span class="eyebrow">Troubleshooting</span>
+                <h2>Common errors & how to fix them</h2>
+                <p class="lead">Every Excel user meets these. Here's what each one is really telling you — each with a
+                    mini
+                    screenshot of the failing formula.</p>
+
+                <div class="error-grid">
+
+                    <article class="error-card">
+                        <h3><span class="err-tag">#N/A</span> Value not found</h3>
+                        <div class="excel-window excel-mini">
+                            <div class="excel-formula-bar">
+                                <div class="name-box">E2</div>
+                                <div class="fx-label">fx</div>
+                                <div class="formula-input small"><span class="fn">=VLOOKUP</span>(<span
+                                        class="c-blue">110</span>, <span class="c-amber">A2:C8</span>, <span
+                                        class="c-green">2</span>, <span class="c-purple">FALSE</span>)</div>
+                            </div>
+                            <div class="excel-sheet">
+                                <div class="grid-wrap" style="width:470px;">
+                                    <table class="excel-grid mini">
+                                        <colgroup>
+                                            <col style="width:36px">
+                                            <col style="width:100px">
+                                            <col style="width:100px">
+                                            <col style="width:100px">
+                                            <col style="width:14px">
+                                            <col style="width:120px">
+                                        </colgroup>
+                                        <thead>
+                                            <tr>
+                                                <th class="corner"></th>
+                                                <th>A</th>
+                                                <th>B</th>
+                                                <th>C</th>
+                                                <th>D</th>
+                                                <th>E</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <th class="rownum">1</th>
+                                                <td class="th-data">Emp ID</td>
+                                                <td class="th-data">Name</td>
+                                                <td class="th-data">Dept</td>
+                                                <td></td>
+                                                <td>Dept:</td>
+                                            </tr>
+                                            <tr>
+                                                <th class="rownum">2</th>
+                                                <td class="num">101</td>
+                                                <td>Priya</td>
+                                                <td>HR</td>
+                                                <td></td>
+                                                <td class="err-cell">#N/A</td>
+                                            </tr>
+                                            <tr>
+                                                <th class="rownum">3</th>
+                                                <td class="num">102</td>
+                                                <td>Rahul</td>
+                                                <td>IT</td>
+                                                <td></td>
+                                                <td></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <p><strong>Why:</strong> Excel searched the whole first column and never found
+                            <strong>110</strong>.</p>
+                        <p class="fix">✔ Fix: check spelling, stray spaces (<code>TRIM</code>), or the ID itself. Show a
+                            friendlier
+                            message with <code>=IFNA(VLOOKUP(…), "Not found")</code>.</p>
+                    </article>
+
+                    <article class="error-card">
+                        <h3><span class="err-tag">#REF!</span> Column index too big</h3>
+                        <div class="excel-window excel-mini">
+                            <div class="excel-formula-bar">
+                                <div class="name-box">E2</div>
+                                <div class="fx-label">fx</div>
+                                <div class="formula-input small"><span class="fn">=VLOOKUP</span>(<span
+                                        class="c-blue">101</span>, <span class="c-amber">A2:C8</span>, <span
+                                        class="c-green">9</span>, <span class="c-purple">FALSE</span>)</div>
+                            </div>
+                            <div class="excel-sheet">
+                                <div class="grid-wrap" style="width:470px;">
+                                    <table class="excel-grid mini">
+                                        <colgroup>
+                                            <col style="width:36px">
+                                            <col style="width:100px">
+                                            <col style="width:100px">
+                                            <col style="width:100px">
+                                            <col style="width:14px">
+                                            <col style="width:120px">
+                                        </colgroup>
+                                        <thead>
+                                            <tr>
+                                                <th class="corner"></th>
+                                                <th>A</th>
+                                                <th>B</th>
+                                                <th>C</th>
+                                                <th>D</th>
+                                                <th>E</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <th class="rownum">1</th>
+                                                <td class="th-data">Emp ID</td>
+                                                <td class="th-data">Name</td>
+                                                <td class="th-data">Dept</td>
+                                                <td></td>
+                                                <td>Dept:</td>
+                                            </tr>
+                                            <tr>
+                                                <th class="rownum">2</th>
+                                                <td class="num">101</td>
+                                                <td>Priya</td>
+                                                <td>HR</td>
+                                                <td></td>
+                                                <td class="err-cell">#REF!</td>
+                                            </tr>
+                                            <tr>
+                                                <th class="rownum">3</th>
+                                                <td class="num">102</td>
+                                                <td>Rahul</td>
+                                                <td>IT</td>
+                                                <td></td>
+                                                <td></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <p><strong>Why:</strong> The range A2:C8 has only <strong>3 columns</strong>, but you asked for
+                            column 9.</p>
+                        <p class="fix">✔ Fix: count columns <em>within the range</em>, not the worksheet. Valid here:
+                            1–3.</p>
+                    </article>
+
+                    <article class="error-card">
+                        <h3><span class="err-tag">#VALUE!</span> Index below 1</h3>
+                        <div class="excel-window excel-mini">
+                            <div class="excel-formula-bar">
+                                <div class="name-box">E2</div>
+                                <div class="fx-label">fx</div>
+                                <div class="formula-input small"><span class="fn">=VLOOKUP</span>(<span
+                                        class="c-blue">101</span>, <span class="c-amber">A2:C8</span>, <span
+                                        class="c-green">0</span>, <span class="c-purple">FALSE</span>)</div>
+                            </div>
+                            <div class="excel-sheet">
+                                <div class="grid-wrap" style="width:470px;">
+                                    <table class="excel-grid mini">
+                                        <colgroup>
+                                            <col style="width:36px">
+                                            <col style="width:100px">
+                                            <col style="width:100px">
+                                            <col style="width:100px">
+                                            <col style="width:14px">
+                                            <col style="width:120px">
+                                        </colgroup>
+                                        <thead>
+                                            <tr>
+                                                <th class="corner"></th>
+                                                <th>A</th>
+                                                <th>B</th>
+                                                <th>C</th>
+                                                <th>D</th>
+                                                <th>E</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <th class="rownum">1</th>
+                                                <td class="th-data">Emp ID</td>
+                                                <td class="th-data">Name</td>
+                                                <td class="th-data">Dept</td>
+                                                <td></td>
+                                                <td>Dept:</td>
+                                            </tr>
+                                            <tr>
+                                                <th class="rownum">2</th>
+                                                <td class="num">101</td>
+                                                <td>Priya</td>
+                                                <td>HR</td>
+                                                <td></td>
+                                                <td class="err-cell">#VALUE!</td>
+                                            </tr>
+                                            <tr>
+                                                <th class="rownum">3</th>
+                                                <td class="num">102</td>
+                                                <td>Rahul</td>
+                                                <td>IT</td>
+                                                <td></td>
+                                                <td></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <p><strong>Why:</strong> The column/row index must be at least <strong>1</strong> — 0 (or a
+                            negative number) is
+                            meaningless.</p>
+                        <p class="fix">✔ Fix: set the index to a whole number ≥ 1.</p>
+                    </article>
+
+                    <article class="error-card">
+                        <h3><span class="err-tag">#NAME?</span> Misspelled function</h3>
+                        <div class="excel-window excel-mini">
+                            <div class="excel-formula-bar">
+                                <div class="name-box">E2</div>
+                                <div class="fx-label">fx</div>
+                                <div class="formula-input small"><span class="fn">=VLOKUP</span>(<span
+                                        class="c-blue">101</span>, <span class="c-amber">A2:C8</span>, <span
+                                        class="c-green">2</span>, <span class="c-purple">FALSE</span>)</div>
+                            </div>
+                            <div class="excel-sheet">
+                                <div class="grid-wrap" style="width:470px;">
+                                    <table class="excel-grid mini">
+                                        <colgroup>
+                                            <col style="width:36px">
+                                            <col style="width:100px">
+                                            <col style="width:100px">
+                                            <col style="width:100px">
+                                            <col style="width:14px">
+                                            <col style="width:120px">
+                                        </colgroup>
+                                        <thead>
+                                            <tr>
+                                                <th class="corner"></th>
+                                                <th>A</th>
+                                                <th>B</th>
+                                                <th>C</th>
+                                                <th>D</th>
+                                                <th>E</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <th class="rownum">1</th>
+                                                <td class="th-data">Emp ID</td>
+                                                <td class="th-data">Name</td>
+                                                <td class="th-data">Dept</td>
+                                                <td></td>
+                                                <td>Dept:</td>
+                                            </tr>
+                                            <tr>
+                                                <th class="rownum">2</th>
+                                                <td class="num">101</td>
+                                                <td>Priya</td>
+                                                <td>HR</td>
+                                                <td></td>
+                                                <td class="err-cell">#NAME?</td>
+                                            </tr>
+                                            <tr>
+                                                <th class="rownum">3</th>
+                                                <td class="num">102</td>
+                                                <td>Rahul</td>
+                                                <td>IT</td>
+                                                <td></td>
+                                                <td></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <p><strong>Why:</strong> <code>VLOKUP</code> isn't a function — one scrambled letter is enough.
+                            Excel also throws
+                            this when text like <code>Mar</code> is typed without quotes.</p>
+                        <p class="fix">✔ Fix: fix the spelling; wrap text values in quotes: <code>"Mar"</code>.</p>
+                    </article>
+
+                    <article class="error-card">
+                        <h3><span class="err-tag">#N/A</span> Text vs number trap</h3>
+                        <div class="excel-window excel-mini">
+                            <div class="excel-formula-bar">
+                                <div class="name-box">E2</div>
+                                <div class="fx-label">fx</div>
+                                <div class="formula-input small"><span class="fn">=VLOOKUP</span>(<span
+                                        class="c-blue">"101"</span>, <span class="c-amber">A2:C8</span>, <span
+                                        class="c-green">2</span>, <span class="c-purple">FALSE</span>)</div>
+                            </div>
+                            <div class="excel-sheet">
+                                <div class="grid-wrap" style="width:470px;">
+                                    <table class="excel-grid mini">
+                                        <colgroup>
+                                            <col style="width:36px">
+                                            <col style="width:100px">
+                                            <col style="width:100px">
+                                            <col style="width:100px">
+                                            <col style="width:14px">
+                                            <col style="width:120px">
+                                        </colgroup>
+                                        <thead>
+                                            <tr>
+                                                <th class="corner"></th>
+                                                <th>A</th>
+                                                <th>B</th>
+                                                <th>C</th>
+                                                <th>D</th>
+                                                <th>E</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <th class="rownum">1</th>
+                                                <td class="th-data">Emp ID</td>
+                                                <td class="th-data">Name</td>
+                                                <td class="th-data">Dept</td>
+                                                <td></td>
+                                                <td>Dept:</td>
+                                            </tr>
+                                            <tr>
+                                                <th class="rownum">2</th>
+                                                <td class="num">101</td>
+                                                <td>Priya</td>
+                                                <td>HR</td>
+                                                <td></td>
+                                                <td class="err-cell">#N/A</td>
+                                            </tr>
+                                            <tr>
+                                                <th class="rownum">3</th>
+                                                <td class="num">102</td>
+                                                <td>Rahul</td>
+                                                <td>IT</td>
+                                                <td></td>
+                                                <td></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <p><strong>Why:</strong> <code>"101"</code> in quotes is <em>text</em>; the table stores the
+                            <em>number</em> 101.
+                            They look identical but don't match.</p>
+                        <p class="fix">✔ Fix: match the types — <code>=VLOOKUP(VALUE("101"), …)</code> or re-enter the
+                            ID as a number.</p>
+                    </article>
+
+                    <article class="error-card warn-card">
+                        <h3><span class="err-tag warn">⚠ No error — wrong answer!</span> The sneakiest bug</h3>
+                        <div class="excel-window excel-mini">
+                            <div class="excel-formula-bar">
+                                <div class="name-box">E2</div>
+                                <div class="fx-label">fx</div>
+                                <div class="formula-input small"><span class="fn">=VLOOKUP</span>(<span
+                                        class="c-blue">105</span>, <span class="c-amber">A2:C8</span>, <span
+                                        class="c-green">2</span>)</div>
+                            </div>
+                            <div class="excel-sheet">
+                                <div class="grid-wrap" style="width:470px;">
+                                    <table class="excel-grid mini">
+                                        <colgroup>
+                                            <col style="width:36px">
+                                            <col style="width:100px">
+                                            <col style="width:100px">
+                                            <col style="width:100px">
+                                            <col style="width:14px">
+                                            <col style="width:120px">
+                                        </colgroup>
+                                        <thead>
+                                            <tr>
+                                                <th class="corner"></th>
+                                                <th>A</th>
+                                                <th>B</th>
+                                                <th>C</th>
+                                                <th>D</th>
+                                                <th>E</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <th class="rownum">1</th>
+                                                <td class="th-data">Emp ID</td>
+                                                <td class="th-data">Name</td>
+                                                <td class="th-data">Dept</td>
+                                                <td></td>
+                                                <td>Dept:</td>
+                                            </tr>
+                                            <tr>
+                                                <th class="rownum">2</th>
+                                                <td class="num">101</td>
+                                                <td>Priya</td>
+                                                <td>HR</td>
+                                                <td></td>
+                                                <td class="warn-cell">Priya ✗</td>
+                                            </tr>
+                                            <tr>
+                                                <th class="rownum">3</th>
+                                                <td class="num">102</td>
+                                                <td>Rahul</td>
+                                                <td>IT</td>
+                                                <td></td>
+                                                <td></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <p><strong>Why:</strong> The 4th argument was omitted, so Excel defaulted to <code>TRUE</code>
+                            (approximate). On
+                            unsorted IDs it silently guesses — returning <em>Priya's</em> name for ID 105. No error,
+                            just wrong data.</p>
+                        <p class="fix">✔ Fix: <strong>always type FALSE</strong> unless you specifically need
+                            approximate matching.</p>
+                    </article>
+
+                </div>
+
+                <div class="callout">
+                    <p>🛡️ <strong>Pro habits:</strong> lock your ranges with dollar signs (<code>$A$2:$D$8</code>,
+                        press F4) before
+                        filling formulas down · wrap with <code>IFNA</code> for clean reports · remember VLOOKUP can
+                        <strong>never look
+                            left</strong> — its first column must contain the lookup values.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============ DEMO ============ -->
+        <section id="demo" class="section alt">
+            <div class="container">
+                <span class="eyebrow">Hands-on</span>
+                <h2>Try VLOOKUP yourself — right here</h2>
+                <p class="lead">This mini-spreadsheet runs a real lookup in your browser. Change the Employee ID or the
+                    return
+                    column and watch the highlights move — exactly the way Excel does it.</p>
+
+                <div class="demo-panel">
+                    <div class="demo-controls">
+                        <label>Employee ID <input id="demo-id" type="number" min="101" max="107" step="1"
+                                value="105"></label>
+                        <label>Return column
+                            <select id="demo-col">
+                                <option value="1">2 — Name</option>
+                                <option value="2" selected>3 — Department</option>
+                                <option value="3">4 — Salary</option>
+                            </select>
+                        </label>
+                        <div class="demo-result" id="demo-status">✅ VLOOKUP found 105 → <strong>Marketing</strong></div>
+                    </div>
+
+                    <div class="excel-window">
+                        <div class="excel-formula-bar">
+                            <div class="name-box">G2</div>
+                            <div class="fx-label">fx</div>
+                            <div class="formula-input">
+                                <span class="fn">=VLOOKUP</span>(<span class="c-blue">F2</span>, <span
+                                    class="c-amber">A2:D8</span>, <span class="c-green" id="demo-f-col">3</span>, <span
+                                    class="c-purple">FALSE</span>)
+                            </div>
+                        </div>
+                        <div class="excel-sheet">
+                            <div class="grid-wrap" style="width:748px;">
+                                <table class="excel-grid" id="demo-grid">
+                                    <colgroup>
+                                        <col style="width:44px">
+                                        <col style="width:112px">
+                                        <col style="width:112px">
+                                        <col style="width:112px">
+                                        <col style="width:112px">
+                                        <col style="width:18px">
+                                        <col style="width:108px">
+                                        <col style="width:130px">
+                                    </colgroup>
+                                    <thead>
+                                        <tr>
+                                            <th class="corner"></th>
+                                            <th>A</th>
+                                            <th>B</th>
+                                            <th>C</th>
+                                            <th>D</th>
+                                            <th>E</th>
+                                            <th>F</th>
+                                            <th>G</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="demo-grid-body"></tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="excel-statusbar">
+                            <span id="demo-statusbar">Ready</span>
+                            <span class="sheet-tabs"><span class="active">Sheet1</span><span>+</span></span>
+                        </div>
+                    </div>
+                    <p class="fine center">IDs run 101–107. The blue cell is your <span class="c-blue">lookup_value
+                            (F2)</span>, the
+                        green header is the <span class="c-green">column being returned</span>, and the yellow row is
+                        Excel's
+                        <span class="c-amber">match</span>.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============ XLOOKUP ============ -->
+        <section id="xlookup" class="section">
+            <div class="container">
+                <span class="eyebrow">Looking ahead</span>
+                <h2>The modern successor: XLOOKUP</h2>
+                <p class="lead">If you have Excel 365 or Excel 2021+, meet <strong>XLOOKUP</strong> — it fixes every
+                    historic
+                    annoyance of V/HLOOKUP:</p>
+                <div class="syntax-card">
+                    <code class="syntax-formula">
+        <span class="fn">=XLOOKUP</span>(<span class="c-blue">105</span>, <span class="c-amber">A2:A8</span>, <span class="c-green">C2:C8</span>, <span class="c-purple">"Not found"</span>)
+      </code>
+                    <ul class="xl-points">
+                        <li>🔍 Looks in <strong>any direction</strong> — left, right, up, down (no more "can't look
+                            left").</li>
+                        <li>🎯 No column counting — you point directly at the return range <code
+                                class="c-green">C2:C8</code>.</li>
+                        <li>🛡️ Exact match is the <strong>default</strong> — the silent-wrong-answer bug disappears.
+                        </li>
+                        <li>💬 A built-in "if not found" message replaces <code>IFNA</code> wrappers.</li>
+                    </ul>
+                </div>
+                <div class="callout">
+                    <p>📚 VLOOKUP and HLOOKUP remain essential — older workbooks, interviews and exams are full of them.
+                        Learn these
+                        two first, and XLOOKUP will feel like a superpower you've already earned.</p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="footer">
+        <p><strong>Excel Lookup Guide</strong> — an interactive tutorial on VLOOKUP & HLOOKUP.</p>
+        <p class="fine">The "screenshots" on this page are faithful, fully-annotated HTML/CSS recreations of the Excel
+            interface, so highlights, arrows and callouts can point at exactly the right cells.</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
